@@ -1,0 +1,20 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <button onclick="speak()">Speak</button>
+        <script>
+            var synth = window.speechSynthesis;
+
+            function speak() {
+                var voices = synth.getVoices();
+                var voice = voices.find(x => x.lang === "fr-FR");
+                if (voice === undefined) { throw new Error('Cannot find French voice') }
+                var utterance = new SpeechSynthesisUtterance("01 02 03");
+                utterance.voice = voice;
+                synth.speak(utterance);
+            }
+        </script>
+    </body>
+</html>

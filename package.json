@@ -1,0 +1,124 @@
+{
+  "name": "frenchnumberquiz",
+  "version": "1.0.0",
+  "private": false,
+  "description": "frenchnumberquiz",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andywilsonuk/frenchnumberquiz"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.dev.js",
+    "dev": "webpack-dev-server --config webpack.devserver.js",
+    "buildprod": "webpack --config webpack.prod.js",
+    "test": "jest --coverage",
+    "testwatch": "jest --coverage --watchAll",
+    "lint": "eslint ./src/*/*.js ./test/*/*.js"
+  },
+  "author": "andywilsonuk",
+  "devDependencies": {
+    "@babel/core": "7.7.2",
+    "@babel/plugin-transform-react-jsx": "7.7.0",
+    "@babel/preset-env": "7.7.1",
+    "babel-eslint": "10.0.3",
+    "babel-loader": "8.0.6",
+    "browserslist": "4.7.0",
+    "clean-webpack-plugin": "3.0.0",
+    "copy-webpack-plugin": "5.0.5",
+    "core-js": "3.2.1",
+    "css-hot-loader": "1.4.4",
+    "css-loader": "3.2.0",
+    "cssnano": "4.1.10",
+    "eslint": "6.6.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-compat": "3.3.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jest": "23.0.3",
+    "eslint-plugin-react": "7.16.0",
+    "file-loader": "4.2.0",
+    "html-webpack-plugin": "3.2.0",
+    "hyperapp": "2.0.3",
+    "imports": "1.0.0",
+    "jest": "24.9.0",
+    "mini-css-extract-plugin": "0.8.0",
+    "obsolete-webpack-plugin": "0.5.6",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "random-int": "^2.0.1",
+    "url-loader": "2.2.0",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-middleware": "3.7.2",
+    "webpack-dev-server": "3.9.0",
+    "webpack-hot-middleware": "2.25.0",
+    "webpack-merge": "4.2.2"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "plugins": [
+      "import",
+      "react",
+      "jest"
+    ],
+    "rules": {
+      "linebreak-style": "off",
+      "implicit-arrow-linebreak": "off",
+      "no-unused-vars": [
+        2,
+        {
+          "varsIgnorePattern": "h"
+        }
+      ],
+      "react/jsx-uses-vars": 2,
+      "indent": "off",
+      "no-continue": "off",
+      "import/no-extraneous-dependencies": "off",
+      "unicode-bom": "off",
+      "prefer-destructuring": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 140
+        }
+      ]
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "parser": "babel-eslint"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
+    ],
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false,
+          "corejs": 3,
+          "useBuiltIns": "usage"
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          "@babel/preset-env"
+        ]
+      }
+    }
+  }
+}
