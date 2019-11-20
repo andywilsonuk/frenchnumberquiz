@@ -1,7 +1,7 @@
 import randomInt from 'random-int';
 import statuses from '../state/statuses';
 
-const questionCount = 2;
+const questionCount = 10;
 const synth = window.speechSynthesis;
 let voice;
 
@@ -10,9 +10,6 @@ const speakQuestion = (text) => {
     utterance.voice = voice;
     synth.speak(utterance);
 };
-
-// TODO: Add speak again button
-// TODO: Enter submits
 
 export default {
     prepare: (state) => {
@@ -45,5 +42,9 @@ export default {
         return {
             ...state, answers: updatedAnswers, correctness: updatedCorrectness, questionIndex: questionIndex + 1, answerText: null,
         };
+    },
+    sayQuestion: (state) => {
+        speakQuestion(state.questions[state.questionIndex]);
+        return state;
     },
 };
