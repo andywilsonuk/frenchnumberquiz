@@ -1,6 +1,7 @@
 import { app } from 'hyperapp';
 import state from './state';
 import view from './components/view';
+import 'reset-css';
 import './styles/app.css';
 
 app({

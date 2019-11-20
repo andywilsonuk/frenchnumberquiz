@@ -7,7 +7,6 @@ module.exports = merge(common, {
     module: {
         rules: [{
             test: /\.css$/,
-            exclude: /node_modules/,
             use: [
                 'css-hot-loader',
                 MiniCssExtractPlugin.loader,
