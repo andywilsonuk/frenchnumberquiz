@@ -1,3 +1,3 @@
-A simple website for learning French numbers through listening. 
+A simple French listening quiz website. 
 
 Live version available at: https://andywilson.me.uk/frenchnumberquiz-site/
