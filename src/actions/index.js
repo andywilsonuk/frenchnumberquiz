@@ -2,8 +2,20 @@ import randomInt from 'random-int';
 import statuses from '../state/statuses';
 
 const questionCount = 10;
-const synth = window.speechSynthesis;
 let voice;
+let voicesLoaded = false;
+
+const loadVoices = () => {
+    const voices = speechSynthesis.getVoices();
+    voicesLoaded = true;
+    voice = voices.find((x) => x.lang === 'fr-FR' || x.lang === 'fr_FR');
+};
+
+loadVoices();
+
+window.speechSynthesis.onvoiceschanged = () => {
+    loadVoices();
+};
 
 const getNumbers = (count) => {
     const numbers = [];
@@ -25,27 +37,25 @@ const speakQuestion = (text) => {
 
 export default {
     prepare: (state) => {
-        let questions;
+        const questions = getNumbers(questionCount);
 
         try {
-            questions = getNumbers(questionCount);
-            if (!('speechSynthesis' in window)) { throw new Error('Unsupported browser (no speechSynthesis)'); }
-            const voices = window.speechSynthesis.getVoices();
-            voice = voices.find((x) => x.lang === 'fr-FR');
-            if (voice === undefined) { throw new Error('Cannot find French voice'); }
-
+            if (voice === undefined) {
+                throw new Error(`${voicesLoaded ? 'Voices loaded' : 'Voices not loaded'}. Cannot find French voice using speechSynthesis`);
+            }
             speakQuestion(questions[0]);
         } catch (err) {
             alert(err);
             throw err;
         }
+
         return {
             ...state, questions, questionIndex: 0, answers: [], status: statuses.playing, correctness: [], answerText: null,
         };
     },
     setAnswerText: (state, event) => ({ ...state, answerText: event.target.value }),
     submit: (state) => {
-        const isCorrect = state.questions[state.questionIndex] === state.answerText;
+        const isCorrect = `${state.questions[state.questionIndex]}` === state.answerText;
         const questionIndex = state.questionIndex;
         const updatedAnswers = [...state.answers, state.answerText];
         const updatedCorrectness = [...state.correctness, isCorrect];
