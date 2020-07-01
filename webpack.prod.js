@@ -8,7 +8,6 @@ module.exports = merge(common, {
     module: {
         rules: [{
             test: /\.css$/,
-            exclude: /node_modules/,
             use: [
                 MiniCssExtractPlugin.loader,
                 'css-loader',
