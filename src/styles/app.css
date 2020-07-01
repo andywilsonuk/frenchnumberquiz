@@ -97,13 +97,18 @@ input {
 }
 
 ul {
-    list-style: decimal-leading-zero;
-    list-style-position: inside;
+    list-style: decimal;
+    list-style-position: outside;
     padding-inline-start: 0;
 }
 
 li {
     margin-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+li span {
+    padding-left: 1rem;
 }
 
 .help-text {

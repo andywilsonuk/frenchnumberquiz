@@ -5,24 +5,42 @@ const questionCount = 10;
 const synth = window.speechSynthesis;
 let voice;
 
+const getNumbers = (count) => {
+    const numbers = [];
+    while (numbers.length < count) {
+        const number = randomInt(0, 99);
+        if (numbers.indexOf(number) !== -1) {
+            continue;
+        }
+        numbers.push(number);
+    }
+    return numbers;
+};
+
 const speakQuestion = (text) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = voice;
-    synth.speak(utterance);
+    window.speechSynthesis.speak(utterance);
 };
 
 export default {
     prepare: (state) => {
-        const voices = synth.getVoices();
-        voice = voices.find((x) => x.lang === 'fr-FR');
-        if (voice === undefined) { throw new Error('Cannot find French voice'); }
-        const newQuestions = [];
-        for (let counter = 0; counter < questionCount; counter += 1) {
-            newQuestions.push(randomInt(0, 99).toString());
+        let questions;
+
+        try {
+            questions = getNumbers(questionCount);
+            if (!('speechSynthesis' in window)) { throw new Error('Unsupported browser (no speechSynthesis)'); }
+            const voices = window.speechSynthesis.getVoices();
+            voice = voices.find((x) => x.lang === 'fr-FR');
+            if (voice === undefined) { throw new Error('Cannot find French voice'); }
+
+            speakQuestion(questions[0]);
+        } catch (err) {
+            alert(err);
+            throw err;
         }
-        speakQuestion(newQuestions[0]);
         return {
-            ...state, questions: newQuestions, questionIndex: 0, answers: [], status: statuses.playing, correctness: [], answerText: null,
+            ...state, questions, questionIndex: 0, answers: [], status: statuses.playing, correctness: [], answerText: null,
         };
     },
     setAnswerText: (state, event) => ({ ...state, answerText: event.target.value }),
@@ -43,8 +61,12 @@ export default {
             ...state, answers: updatedAnswers, correctness: updatedCorrectness, questionIndex: questionIndex + 1, answerText: null,
         };
     },
-    sayQuestion: (state) => {
+    sayCurrentQuestion: (state) => {
         speakQuestion(state.questions[state.questionIndex]);
+        return state;
+    },
+    sayQuestion: (state, index) => {
+        speakQuestion(state.questions[index]);
         return state;
     },
 };

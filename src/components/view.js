@@ -3,7 +3,14 @@ import actions from '../actions';
 import statuses from '../state/statuses';
 
 const answerCorrectness = (correctness, question, answer) =>
-    <li>{answer} {correctness ? 'correct' : `incorrect, answer: ${question}`}</li>;
+    <li>
+        <button class="speak-icon" onclick={actions.sayCurrentQuestion}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+        </button>
+        <span>{answer} {correctness ? 'is correct' : ` is incorrect, answer: ${question}`}</span>
+    </li>;
 const focusAnswerBox = () =>
     setTimeout(() => {
         const answerBox = document.getElementById('answerBox');
@@ -18,7 +25,7 @@ const Question = ({ state }) =>
     <div>
         <div class="question-row">
             <h2>Question {state.questionIndex + 1}</h2>
-            <button class="speak-icon" onclick={actions.sayQuestion}>
+            <button class="speak-icon" onclick={actions.sayCurrentQuestion}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
                 </svg>
